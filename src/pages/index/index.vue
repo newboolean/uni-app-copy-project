@@ -2,53 +2,34 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-13 15:19:46
+ * @LastEditTime: 2024-01-13 23:26:46
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 首页
 -->
 <template>
   <view class="content">
-    <image class="logo" src="./static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
-    <uni-card title="基础卡片" extra="额外信息">
-      <text
-        >这是一个基础卡片示例，此示例展示了一个标题加标题额外信息的标准卡片。</text
-      >
-    </uni-card>
+    <CustomNavbar></CustomNavbar>
+    <XtxSwiper :list="bannerList"></XtxSwiper>
   </view>
 </template>
 
 <script setup>
 import { ref } from "vue";
-const title = ref("master");
+import { onLoad } from '@dcloudio/uni-app'
+import { getHomeBannerAPI } from "@/services/index.js";
+import CustomNavbar from "./components/CustomNavbar.vue";
+// 获取轮播图数据
+const bannerList = ref([]);
+const getHomeBannerData = async () => {
+  const res = await getHomeBannerAPI();
+  bannerList.value = res.result;
+  console.log('====================================');
+  console.log(bannerList.value);
+  console.log('====================================');
+};
+onLoad(() => {
+  getHomeBannerData()
+})
 </script>
 
-<style>
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
-
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
-}
-</style>
+<style lang="scss"></style>
