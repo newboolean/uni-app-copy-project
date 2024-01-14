@@ -2,48 +2,70 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-13 13:52:54
+ * @LastEditTime: 2024-01-14 14:05:29
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 首页
 -->
-<template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png"></image>
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
-    </view>
-  </view>
-</template>
-
-<script setup >
-  import { ref } from 'vue'
-  const title = ref('master')
+<script setup>
+import { ref } from "vue";
+import { onLoad } from "@dcloudio/uni-app";
+import {
+  getHomeBannerAPI,
+  getHomeCategoryAPI,
+  getHotListAPI,
+} from "@/services/index.js";
+import CustomNavbar from "./components/CustomNavbar.vue";
+import CategoryPanel from "./components/CategoryPanel.vue";
+import HotPanel from "./components/HotPanel.vue";
+// 获取轮播图数据
+const bannerList = ref([]);
+const getHomeBannerData = async () => {
+  const res = await getHomeBannerAPI();
+  bannerList.value = res.result;
+};
+// 获取分类分区组件
+const categoryList = ref([]);
+const getDategoryList = async () => {
+  const res = await getHomeCategoryAPI();
+  categoryList.value = res.result;
+};
+// 获取热门推荐
+const hotList = ref([]);
+const getHotList = async () => {
+  const res = await getHotListAPI();
+  hotList.value = res.result;
+};
+onLoad(() => {
+  getHomeBannerData();
+  getDategoryList();
+  getHotList();
+});
 </script>
-
-<style>
-.content {
+<template>
+  <CustomNavbar></CustomNavbar>
+  <scroll-view class="scroll-view" scroll-y>
+    <XtxSwiper :list="bannerList"></XtxSwiper>
+    <CategoryPanel :list="categoryList"></CategoryPanel>
+    <HotPanel :list="hotList"></HotPanel>
+    <XtxGuess></XtxGuess>
+  </scroll-view>
+</template>
+<style lang="scss">
+page {
+  background-color: #f7f7f7;
+  height: 10vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
-}
+// .viewport {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
+// }
 
-.text-area {
-  display: flex;
-  justify-content: center;
-}
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
+.scroll-view {
+  flex: 1;
 }
 </style>
