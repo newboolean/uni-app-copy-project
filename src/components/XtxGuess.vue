@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-14 12:34:14
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-14 14:22:05
+ * @LastEditTime: 2024-01-14 23:49:19
  * @FilePath: \my-vue3-project\src\components\XtxGuess.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -30,14 +30,19 @@
 <script setup>
 import { getHomeGoodsGuessLikeAPI } from "@/services/index.js";
 import { onMounted, ref } from "vue";
+const pageParams = {
+  pageNum: 1,
+  pageSize: 10,
+};
 const guessList = ref([]);
 const getHomeGoodsGuessLikeData = async () => {
-  const res = await getHomeGoodsGuessLikeAPI();
-  console.log("====================================");
-  console.log(res);
-  console.log("====================================");
-  guessList.value = res.result.items;
+  const res = await getHomeGoodsGuessLikeAPI(pageParams);
+  guessList.value.push(...res.result.items);
+  pageParams.pageNum++;
 };
+defineExpose({
+  getMore: getHomeGoodsGuessLikeData,
+});
 onMounted(() => {
   getHomeGoodsGuessLikeData();
 });

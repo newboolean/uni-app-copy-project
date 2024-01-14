@@ -2,12 +2,12 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-14 14:05:29
+ * @LastEditTime: 2024-01-14 23:43:52
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
  * @Description: 首页
 -->
 <script setup>
-import { ref } from "vue";
+import { nextTick, onMounted, ref } from "vue";
 import { onLoad } from "@dcloudio/uni-app";
 import {
   getHomeBannerAPI,
@@ -35,6 +35,12 @@ const getHotList = async () => {
   const res = await getHotListAPI();
   hotList.value = res.result;
 };
+const guessMore = ref();
+// 滚动到底部获取更多数据
+const onScrolltolower = () => {
+  guessMore.value.getMore();
+};
+
 onLoad(() => {
   getHomeBannerData();
   getDategoryList();
@@ -42,30 +48,33 @@ onLoad(() => {
 });
 </script>
 <template>
-  <CustomNavbar></CustomNavbar>
-  <scroll-view class="scroll-view" scroll-y>
-    <XtxSwiper :list="bannerList"></XtxSwiper>
-    <CategoryPanel :list="categoryList"></CategoryPanel>
-    <HotPanel :list="hotList"></HotPanel>
-    <XtxGuess></XtxGuess>
-  </scroll-view>
+  <view class="viewport">
+    <CustomNavbar class="nav-bar"></CustomNavbar>
+    <scroll-view
+      @scrolltolower="onScrolltolower"
+      class="scroll-view"
+      :scroll-y="true"
+    >
+      <XtxSwiper :list="bannerList"></XtxSwiper>
+      <CategoryPanel :list="categoryList"></CategoryPanel>
+      <HotPanel :list="hotList"></HotPanel>
+      <XtxGuess ref="guessMore"></XtxGuess>
+    </scroll-view>
+  </view>
 </template>
 <style lang="scss">
 page {
   background-color: #f7f7f7;
-  height: 10vh;
+  height: 100%;
+}
+.viewport {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-// .viewport {
-//   height: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   overflow: hidden;
-// }
-
 .scroll-view {
-  flex: 1;
+  // flex: 1;
+  height: 80%;
 }
 </style>
