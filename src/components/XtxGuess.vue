@@ -26,6 +26,9 @@
       </view>
     </navigator>
   </view>
+  <view class="loading-text">
+    {{ finish ? "没有更多数据~" : "正在加载..." }}
+  </view>
 </template>
 <script setup>
 import { getHomeGoodsGuessLikeAPI } from "@/services/index.js";
@@ -35,10 +38,20 @@ const pageParams = {
   pageSize: 10,
 };
 const guessList = ref([]);
+// 数据是否结束
+const finish = ref(false);
 const getHomeGoodsGuessLikeData = async () => {
+  // 退出分页判断
+  if (finish.value === true) {
+    return uni.showToast({ icon: "none", title: "没有更多数据~" });
+  }
   const res = await getHomeGoodsGuessLikeAPI(pageParams);
   guessList.value.push(...res.result.items);
-  pageParams.pageNum++;
+  if (pageParams.pageNum < res.result.pages) {
+    pageParams.pageNum++;
+  } else {
+    finish.value = true;
+  }
 };
 defineExpose({
   getMore: getHomeGoodsGuessLikeData,
