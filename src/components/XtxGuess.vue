@@ -53,7 +53,14 @@ const getHomeGoodsGuessLikeData = async () => {
     finish.value = true;
   }
 };
+// 重置数据
+const resetData = () => {
+  pageParams.pageNum = 1
+  guessList.value = []
+  finish.value = false
+}
 defineExpose({
+  resetData,
   getMore: getHomeGoodsGuessLikeData,
 });
 onMounted(() => {

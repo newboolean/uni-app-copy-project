@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-17 22:32:59
+ * @LastEditTime: 2024-01-17 22:43:31
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
  * @Description: 首页
 -->
@@ -44,7 +44,13 @@ const isTriggered = ref(false); // 是否下拉刷新
 // 下拉刷新
 const onRefresherrefresh = async () => {
   isTriggered.value = true;
-  await Promise.all([getHomeBannerData(), getDategoryList(), getHotList()]);
+  guessMore.value.resetData();
+  await Promise.all([
+    getHomeBannerData(),
+    getDategoryList(),
+    getHotList(),
+    guessMore.value.getMore(),
+  ]);
   isTriggered.value = false;
 };
 onLoad(() => {
