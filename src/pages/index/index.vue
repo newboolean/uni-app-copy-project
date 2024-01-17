@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-17 22:43:31
+ * @LastEditTime: 2024-01-17 23:04:23
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
  * @Description: 首页
 -->
@@ -17,6 +17,7 @@ import {
 import CustomNavbar from "./components/CustomNavbar.vue";
 import CategoryPanel from "./components/CategoryPanel.vue";
 import HotPanel from "./components/HotPanel.vue";
+import PageSkeleton from "./components/PageSkeleton.vue";
 // 获取轮播图数据
 const bannerList = ref([]);
 const getHomeBannerData = async () => {
@@ -53,10 +54,12 @@ const onRefresherrefresh = async () => {
   ]);
   isTriggered.value = false;
 };
-onLoad(() => {
-  getHomeBannerData();
-  getDategoryList();
-  getHotList();
+// 数据是否加载中
+const isLoading = ref(false); // 数据是否加载中
+onLoad(async () => {
+  isLoading.value = true;
+  await Promise.all([getHomeBannerData(), getDategoryList(), getHotList()]);
+  isLoading.value = false;
 });
 </script>
 <template>
@@ -70,10 +73,13 @@ onLoad(() => {
       class="scroll-view"
       :scroll-y="true"
     >
-      <XtxSwiper :list="bannerList"></XtxSwiper>
-      <CategoryPanel :list="categoryList"></CategoryPanel>
-      <HotPanel :list="hotList"></HotPanel>
-      <XtxGuess ref="guessMore"></XtxGuess>
+      <PageSkeleton v-if="isLoading" />
+      <template v-else>
+        <XtxSwiper :list="bannerList"></XtxSwiper>
+        <CategoryPanel :list="categoryList"></CategoryPanel>
+        <HotPanel :list="hotList"></HotPanel>
+        <XtxGuess ref="guessMore"></XtxGuess>
+      </template>
     </scroll-view>
   </view>
 </template>
