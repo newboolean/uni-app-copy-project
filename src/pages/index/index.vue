@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-14 23:43:52
+ * @LastEditTime: 2024-01-17 22:32:59
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
  * @Description: 首页
 -->
@@ -40,7 +40,13 @@ const guessMore = ref();
 const onScrolltolower = () => {
   guessMore.value.getMore();
 };
-
+const isTriggered = ref(false); // 是否下拉刷新
+// 下拉刷新
+const onRefresherrefresh = async () => {
+  isTriggered.value = true;
+  await Promise.all([getHomeBannerData(), getDategoryList(), getHotList()]);
+  isTriggered.value = false;
+};
 onLoad(() => {
   getHomeBannerData();
   getDategoryList();
@@ -52,6 +58,9 @@ onLoad(() => {
     <CustomNavbar class="nav-bar"></CustomNavbar>
     <scroll-view
       @scrolltolower="onScrolltolower"
+      @refresherrefresh="onRefresherrefresh"
+      :refresher-enabled="true"
+      :refresher-triggered="isTriggered"
       class="scroll-view"
       :scroll-y="true"
     >
