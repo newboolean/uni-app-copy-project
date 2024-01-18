@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-14 12:34:14
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-14 14:22:05
+ * @LastEditTime: 2024-01-14 23:49:19
  * @FilePath: \my-vue3-project\src\components\XtxGuess.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,18 +26,43 @@
       </view>
     </navigator>
   </view>
+  <view class="loading-text">
+    {{ finish ? "没有更多数据~" : "正在加载..." }}
+  </view>
 </template>
 <script setup>
 import { getHomeGoodsGuessLikeAPI } from "@/services/index.js";
 import { onMounted, ref } from "vue";
-const guessList = ref([]);
-const getHomeGoodsGuessLikeData = async () => {
-  const res = await getHomeGoodsGuessLikeAPI();
-  console.log("====================================");
-  console.log(res);
-  console.log("====================================");
-  guessList.value = res.result.items;
+const pageParams = {
+  pageNum: 1,
+  pageSize: 10,
 };
+const guessList = ref([]);
+// 数据是否结束
+const finish = ref(false);
+const getHomeGoodsGuessLikeData = async () => {
+  // 退出分页判断
+  if (finish.value === true) {
+    return uni.showToast({ icon: "none", title: "没有更多数据~" });
+  }
+  const res = await getHomeGoodsGuessLikeAPI(pageParams);
+  guessList.value.push(...res.result.items);
+  if (pageParams.pageNum < res.result.pages) {
+    pageParams.pageNum++;
+  } else {
+    finish.value = true;
+  }
+};
+// 重置数据
+const resetData = () => {
+  pageParams.pageNum = 1
+  guessList.value = []
+  finish.value = false
+}
+defineExpose({
+  resetData,
+  getMore: getHomeGoodsGuessLikeData,
+});
 onMounted(() => {
   getHomeGoodsGuessLikeData();
 });

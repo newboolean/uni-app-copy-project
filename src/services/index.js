@@ -21,24 +21,36 @@ export const getHomeBannerAPI = (distributionSite = 1) => {
 // 获取分类分区接口
 export const getHomeCategoryAPI = () => {
   return http({
-    method: 'GET',
-    url: '/home/category/mutli',
-  })
+    method: "GET",
+    url: "/home/category/mutli",
+  });
 };
 // 获取热门推荐接口
 export const getHotListAPI = () => {
   return http({
-    method: 'GET',
-    url: '/home/hot/mutli',
-  })
+    method: "GET",
+    url: "/home/hot/mutli",
+  });
 };
 /**
  * 猜你喜欢-小程序
  */
- export const getHomeGoodsGuessLikeAPI = (data) => {
+export const getHomeGoodsGuessLikeAPI = (data) => {
   return http({
-    method: 'GET',
-    url: '/home/goods/guessLike',
+    method: "GET",
+    url: "/home/goods/guessLike",
     data,
-  })
-}
+  });
+};
+/**
+ * 通用热门推荐类型
+ * @param url 请求地址
+ * @param data 请求参数
+ */
+export const getHotRecommendAPI = (url, data) => {
+  return http({
+    method: "GET",
+    url,
+    data,
+  });
+};
