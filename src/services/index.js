@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 23:13:12
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-14 14:15:17
+ * @LastEditTime: 2024-01-18 19:55:12
  * @FilePath: \my-vue3-project\src\services\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -54,3 +54,13 @@ export const getHotRecommendAPI = (url, data) => {
     data,
   });
 };
+
+/**
+ * 分类列表-小程序
+ */
+ export const getCategoryTopAPI = () => {
+  return http({
+    method: 'GET',
+    url: '/category/top',
+  })
+}
