@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 23:13:12
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-18 22:43:18
+ * @LastEditTime: 2024-01-27 18:02:26
  * @FilePath: \my-vue3-project\src\services\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -73,6 +73,43 @@ export const getHotRecommendAPI = (url, data) => {
     method: 'GET',
     url: '/goods',
     data: { id },
+  })
+}
+/**
+ * 小程序登录
+ * @param data 请求参数
+ */
+ export const postLoginWxMinAPI = (data) => {
+  return http({
+    method: 'POST',
+    url: '/login/wxMin',
+    data,
+  })
+}
+
+/**
+ * 小程序登录_内测版
+ * @param phoneNumber 模拟手机号码
+ */
+export const postLoginWxMinSimpleAPI = (phoneNumber) => {
+  return http({
+    method: 'POST',
+    url: '/login/wxMin/simple',
+    data: {
+      phoneNumber,
+    },
+  })
+}
+
+/**
+ * 传统登录-用户名+密码
+ * @param data 请求参数
+ */
+export const postLoginAPI = (data) => {
+  return http({
+    method: 'POST',
+    url: '/login',
+    data,
   })
 }
 
