@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 13:32:59
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-17 23:04:23
+ * @LastEditTime: 2024-01-28 17:30:10
  * @FilePath: \my-vue3-project\src\pages\index\index.vue
  * @Description: 首页
 -->
@@ -18,6 +18,7 @@ import CustomNavbar from "./components/CustomNavbar.vue";
 import CategoryPanel from "./components/CategoryPanel.vue";
 import HotPanel from "./components/HotPanel.vue";
 import PageSkeleton from "./components/PageSkeleton.vue";
+import { useGuessList } from "@/composables";
 // 获取轮播图数据
 const bannerList = ref([]);
 const getHomeBannerData = async () => {
@@ -36,21 +37,18 @@ const getHotList = async () => {
   const res = await getHotListAPI();
   hotList.value = res.result;
 };
-const guessMore = ref();
-// 滚动到底部获取更多数据
-const onScrolltolower = () => {
-  guessMore.value.getMore();
-};
+
+const { guessRef, onScrolltolower } = useGuessList();
 const isTriggered = ref(false); // 是否下拉刷新
 // 下拉刷新
 const onRefresherrefresh = async () => {
   isTriggered.value = true;
-  guessMore.value.resetData();
+  guessRef.value.resetData();
   await Promise.all([
     getHomeBannerData(),
     getDategoryList(),
     getHotList(),
-    guessMore.value.getMore(),
+    guessRef.value.getMore(),
   ]);
   isTriggered.value = false;
 };
@@ -78,7 +76,7 @@ onLoad(async () => {
         <XtxSwiper :list="bannerList"></XtxSwiper>
         <CategoryPanel :list="categoryList"></CategoryPanel>
         <HotPanel :list="hotList"></HotPanel>
-        <XtxGuess ref="guessMore"></XtxGuess>
+        <XtxGuess ref="guessRef"></XtxGuess>
       </template>
     </scroll-view>
   </view>
