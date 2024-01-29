@@ -75,6 +75,18 @@ export const getHotRecommendAPI = (url, data) => {
     data: { id },
   })
 }
+
+/**
+ * 加入购物车
+ * @param data 请求体参数
+ */
+ export const postMemberCartAPI = (data) => {
+  return http({
+    method: 'POST',
+    url: '/member/cart',
+    data,
+  })
+}
 /**
  * 小程序登录
  * @param data 请求参数
