@@ -2,7 +2,7 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 23:13:12
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-01-28 18:29:40
+ * @LastEditTime: 2024-01-29 19:28:35
  * @FilePath: \my-vue3-project\src\services\index.js
  * @Description: 接口
  */
@@ -58,46 +58,35 @@ export const getHotRecommendAPI = (url, data) => {
 /**
  * 分类列表-小程序
  */
- export const getCategoryTopAPI = () => {
+export const getCategoryTopAPI = () => {
   return http({
-    method: 'GET',
-    url: '/category/top',
-  })
-}
+    method: "GET",
+    url: "/category/top",
+  });
+};
 /**
  * 商品详情
  * @param id 商品id
  */
- export const getGoodsByIdAPI = (id) => {
+export const getGoodsByIdAPI = (id) => {
   return http({
-    method: 'GET',
-    url: '/goods',
+    method: "GET",
+    url: "/goods",
     data: { id },
-  })
-}
+  });
+};
 
-/**
- * 加入购物车
- * @param data 请求体参数
- */
- export const postMemberCartAPI = (data) => {
-  return http({
-    method: 'POST',
-    url: '/member/cart',
-    data,
-  })
-}
 /**
  * 小程序登录
  * @param data 请求参数
  */
- export const postLoginWxMinAPI = (data) => {
+export const postLoginWxMinAPI = (data) => {
   return http({
-    method: 'POST',
-    url: '/login/wxMin',
+    method: "POST",
+    url: "/login/wxMin",
     data,
-  })
-}
+  });
+};
 
 /**
  * 小程序登录_内测版
@@ -105,13 +94,13 @@ export const getHotRecommendAPI = (url, data) => {
  */
 export const postLoginWxMinSimpleAPI = (phoneNumber) => {
   return http({
-    method: 'POST',
-    url: '/login/wxMin/simple',
+    method: "POST",
+    url: "/login/wxMin/simple",
     data: {
       phoneNumber,
     },
-  })
-}
+  });
+};
 
 /**
  * 传统登录-用户名+密码
@@ -119,55 +108,55 @@ export const postLoginWxMinSimpleAPI = (phoneNumber) => {
  */
 export const postLoginAPI = (data) => {
   return http({
-    method: 'POST',
-    url: '/login',
+    method: "POST",
+    url: "/login",
     data,
-  })
-}
+  });
+};
 
 /**
  * 获取个人信息
  */
- export const getMemberProfileAPI = () => {
+export const getMemberProfileAPI = () => {
   return http({
-    method: 'GET',
-    url: '/member/profile',
-  })
-}
+    method: "GET",
+    url: "/member/profile",
+  });
+};
 
 /**
  * 修改个人信息
  * @param data 请求体参数
  */
- export const putMemberProfileAPI = (data) => {
+export const putMemberProfileAPI = (data) => {
   return http({
-    method: 'PUT',
-    url: '/member/profile',
+    method: "PUT",
+    url: "/member/profile",
     data,
-  })
-}
+  });
+};
 
 /**
  * 添加收货地址
  * @param data 请求参数
  */
- export const postMemberAddressAPI = (data) => {
+export const postMemberAddressAPI = (data) => {
   return http({
-    method: 'POST',
-    url: '/member/address',
+    method: "POST",
+    url: "/member/address",
     data,
-  })
-}
+  });
+};
 
 /**
  * 获取收货地址列表
  */
 export const getMemberAddressAPI = () => {
   return http({
-    method: 'GET',
-    url: '/member/address',
-  })
-}
+    method: "GET",
+    url: "/member/address",
+  });
+};
 
 /**
  * 获取收货地址详情
@@ -175,10 +164,10 @@ export const getMemberAddressAPI = () => {
  */
 export const getMemberAddressByIdAPI = (id) => {
   return http({
-    method: 'GET',
+    method: "GET",
     url: `/member/address/${id}`,
-  })
-}
+  });
+};
 
 /**
  * 修改收货地址
@@ -187,11 +176,11 @@ export const getMemberAddressByIdAPI = (id) => {
  */
 export const putMemberAddressByIdAPI = (id, data) => {
   return http({
-    method: 'PUT',
+    method: "PUT",
     url: `/member/address/${id}`,
     data,
-  })
-}
+  });
+};
 
 /**
  * 删除收货地址
@@ -199,7 +188,66 @@ export const putMemberAddressByIdAPI = (id, data) => {
  */
 export const deleteMemberAddressByIdAPI = (id) => {
   return http({
-    method: 'DELETE',
+    method: "DELETE",
     url: `/member/address/${id}`,
-  })
-}
+  });
+};
+
+/**
+ * 加入购物车
+ * @param data 请求体参数
+ */
+export const postMemberCartAPI = (data) => {
+  return http({
+    method: "POST",
+    url: "/member/cart",
+    data,
+  });
+};
+
+/**
+ * 获取购物车列表
+ */
+export const getMemberCartAPI = () => {
+  return http({
+    method: "GET",
+    url: "/member/cart",
+  });
+};
+
+/**
+ * 删除/清空购物车单品
+ * @param data 请求体参数 ids SKUID 集合
+ */
+export const deleteMemberCartAPI = (data) => {
+  return http({
+    method: "DELETE",
+    url: "/member/cart",
+    data,
+  });
+};
+
+/**
+ * 修改购物车单品
+ * @param skuId SKUID
+ * @param data selected 选中状态 count 商品数量
+ */
+export const putMemberCartBySkuIdAPI = (skuId, data) => {
+  return http({
+    method: "PUT",
+    url: `/member/cart/${skuId}`,
+    data,
+  });
+};
+
+/**
+ * 购物车全选/取消全选
+ * @param data selected 是否选中
+ */
+export const putMemberCartSelectedAPI = (data) => {
+  return http({
+    method: "PUT",
+    url: "/member/cart/selected",
+    data,
+  });
+};
