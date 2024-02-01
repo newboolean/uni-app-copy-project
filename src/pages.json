@@ -2,17 +2,9 @@
  * @Author: newboolean sunjiyan1228@163.com
  * @Date: 2024-01-13 14:47:46
  * @LastEditors: newboolean sunjiyan1228@163.com
- * @LastEditTime: 2024-02-01 13:56:00
- * @FilePath: \my-vue3-project\src\pages.json
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-/*
- * @Author: newboolean sunjiyan1228@163.com
- * @Date: 2024-01-13 14:47:46
- * @LastEditors: newboolean sunjiyan1228@163.com
  * @LastEditTime: 2024-01-28 17:09:38
  * @FilePath: \my-vue3-project\src\pages.json
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 页面信息
  */{
 	// 组件自动引入规则
 	"easycom": {
@@ -46,12 +38,6 @@
 			}
 		},
 		{
-			"path": "pages/cart/cart2",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		},
-		{
 			"path": "pages/my/my",
 			"style": {
 				"navigationStyle": "custom",
@@ -63,18 +49,6 @@
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "登录"
-			}
-		},
-		{
-			"path": "pages/hot/hot",
-			"style": {
-				"navigationBarTitleText": "热门推荐"
-			}
-		},
-		{
-			"path": "pages/goods/goods",
-			"style": {
-				"navigationBarTitleText": "商品详情"
 			}
 		}
 	],
@@ -115,81 +89,5 @@
 				"selectedIconPath": "static/tabs/user_selected.png"
 			}
 		]
-	},
-	// 分包加载规则
-	"subPackages": [
-		{
-			// 子包的根目录
-			"root": "pagesMember",
-			// 页面路径和窗口表现
-			"pages": [
-				{
-					"path": "settings/settings",
-					"style": {
-						"navigationBarTitleText": "设置"
-					}
-				},
-				{
-					"path": "profile/profile",
-					"style": {
-						"navigationStyle": "custom",
-						"navigationBarTextStyle": "white",
-						"navigationBarTitleText": "个人信息"
-					}
-				},
-				{
-					"path": "address/address",
-					"style": {
-						"navigationBarTitleText": "地址管理"
-					}
-				},
-				{
-					"path": "address-form/address-form",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				}
-			]
-		},
-		{
-			"root": "pagesOrder",
-			"pages": [
-				{
-					"path": "create/create",
-					"style": {
-						"navigationBarTitleText": "填写订单"
-					}
-				},
-				{
-					"path": "detail/detail",
-					"style": {
-						"navigationBarTitleText": "订单详情",
-						"navigationStyle": "custom",
-						"navigationBarTextStyle": "white"
-					}
-				},
-				{
-					"path": "payment/payment",
-					"style": {
-						"navigationBarTitleText": "支付结果页"
-					}
-				},
-				{
-					"path": "list/list",
-					"style": {
-						"navigationBarTitleText": "订单列表页"
-					}
-				}
-			]
-		}
-	],
-	// 分包预下载规则
-	"preloadRule": {
-		"pages/my/my": {
-			"network": "all",
-			"packages": [
-				"pagesMember"
-			]
-		}
 	}
 }
